@@ -422,3 +422,4 @@ calm validate \
 4. **Validation**: Enables pattern-based architecture validation
 5. **Maintainability**: Policy changes automatically propagate to CALM artifacts
 
+

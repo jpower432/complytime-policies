@@ -29,7 +29,7 @@ The `complytime-deployment.pattern.json` pattern focuses on **agent mode** deplo
   - **Loki**: Log aggregation for compliance evidence logs
   - **Grafana**: Visualization and dashboards for compliance monitoring
   - **S3**: Long-term immutable evidence storage
-- **Example**: `complytime-agent-mode-example-1.arch.json`
+- **Example**: `complytime-example.arch.json`
 
 ## Control Requirements
 

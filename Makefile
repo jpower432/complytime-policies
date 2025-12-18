@@ -74,8 +74,8 @@ validate-standards: check-calm ## Validate all CALM standards (as JSON Schema)
 
 validate-with-standards: check-calm ## Validate architecture against compliance ecosystem pattern with standards enforcement
 	@echo "Validating architecture against pattern with standards..."
-	@if [ ! -f "$(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json" ]; then \
-		echo "Error: Architecture file not found: $(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json"; \
+	@if [ ! -f "$(ARCHITECTURE_DIR)/complytime-example.arch.json" ]; then \
+		echo "Error: Architecture file not found: $(ARCHITECTURE_DIR)/complytime-example.arch.json"; \
 		exit 1; \
 	fi
 	@if [ ! -f "$(STANDARDS_DIR)/complytime-pattern.pattern.json" ]; then \
@@ -88,14 +88,14 @@ validate-with-standards: check-calm ## Validate architecture against compliance 
 	fi
 	@$(CALM_CLI) validate \
 		-p $(STANDARDS_DIR)/complytime-pattern.pattern.json \
-		-a $(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json \
+		-a $(ARCHITECTURE_DIR)/complytime-example.arch.json \
 		-u $(URL_MAPPING)
 	@echo "✓ Architecture validated against pattern with standards"
 
-validate-agent-mode-example-1: check-calm ## Validate agent mode example 1 (sidecar) against pattern
-	@echo "Validating agent mode example 1 (sidecar)..."
-	@if [ ! -f "$(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json" ]; then \
-		echo "Error: Agent mode example 1 not found"; \
+validate-example: check-calm ## Validate example architecture against deployment pattern
+	@echo "Validating example architecture..."
+	@if [ ! -f "$(ARCHITECTURE_DIR)/complytime-example.arch.json" ]; then \
+		echo "Error: Example architecture not found"; \
 		exit 1; \
 	fi
 	@if [ ! -f "$(PATTERNS_DIR)/complytime-deployment.pattern.json" ]; then \
@@ -104,28 +104,28 @@ validate-agent-mode-example-1: check-calm ## Validate agent mode example 1 (side
 	fi
 	@$(CALM_CLI) validate \
 		-p $(PATTERNS_DIR)/complytime-deployment.pattern.json \
-		-a $(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json \
+		-a $(ARCHITECTURE_DIR)/complytime-example.arch.json \
 		-u $(URL_MAPPING)
-	@echo "✓ Agent mode example 1 validated successfully"
+	@echo "✓ Example architecture validated successfully"
 
 validate-control-files: ## Validate that control requirement files exist and conform to standards
 	@echo "Validating control requirement files..."
 	@python3 tools/validate-control-files.py
 	@echo "✓ Control files validated successfully"
 
-validate-deployment-examples: validate-agent-mode-example-1 ## Validate all deployment examples
+validate-deployment-examples: validate-example ## Validate all deployment examples
 	@echo "✓ All deployment examples validated successfully"
 
 
 docify: check-calm ## Generate visual documentation website from CALM architecture
 	@echo "Generating documentation website..."
-	@if [ ! -f "$(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json" ]; then \
-		echo "Error: Architecture file not found: $(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json"; \
+	@if [ ! -f "$(ARCHITECTURE_DIR)/complytime-example.arch.json" ]; then \
+		echo "Error: Architecture file not found: $(ARCHITECTURE_DIR)/complytime-example.arch.json"; \
 		exit 1; \
 	fi
 	@mkdir -p docs
 	@$(CALM_CLI) docify \
-		-a $(ARCHITECTURE_DIR)/complytime-agent-mode-example-1.arch.json \
+		-a $(ARCHITECTURE_DIR)/complytime-example.arch.json \
 		-o docs/ \
 		-u $(URL_MAPPING) \
 		--clear-output-directory
